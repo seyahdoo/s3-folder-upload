@@ -1,2 +1,2 @@
 ﻿
-pyinstaller.exe .\s3_folder_upload.py -F
+pyinstaller.exe .\s3-folder-upload.py -F
