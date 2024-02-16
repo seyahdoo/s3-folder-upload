@@ -3,6 +3,7 @@
 import os
 import boto3
 import argparse
+from sys import exit
 
 
 parser = argparse.ArgumentParser(description='upload folder to aws s3 bucket')
@@ -21,8 +22,10 @@ aws_region = args.awsRegion
 aws_access_key_id = args.awsAccessKeyID
 aws_secret_access_key = args.awsSecretAccessKey
 
+print("initializing aws client")
 client = boto3.client('s3', region_name = aws_region, aws_access_key_id=aws_access_key_id, aws_secret_access_key=aws_secret_access_key)
 
+print("walking directory")
 for root, dirs, files in os.walk(source):
     for filename in files:
         local_path = os.path.join(root, filename)
@@ -36,3 +39,5 @@ for root, dirs, files in os.walk(source):
             print("Uploading %s..." % s3_path)
             client.upload_file(local_path, bucket, s3_path)
 
+print("done")
+exit(0)
