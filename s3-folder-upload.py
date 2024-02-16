@@ -31,12 +31,12 @@ for root, dirs, files in os.walk(source):
         local_path = os.path.join(root, filename)
         relative_path = os.path.relpath(local_path, source)
         s3_path = os.path.join(destination, relative_path)
-        print('Searching "%s" in "%s"' % (s3_path, bucket))
+        print(f'Searching "{s3_path}" in "{bucket}"')
         try:
             client.head_object(Bucket=bucket, Key=s3_path)
-            print ("Path found on S3! Skipping %s..." % s3_path)
+            print(f"Path found on S3! Skipping {s3_path}...")
         except:
-            print("Uploading %s..." % s3_path)
+            print(f"Uploading {s3_path}...")
             client.upload_file(local_path, bucket, s3_path)
 
 print("done")
